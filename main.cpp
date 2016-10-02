@@ -62,9 +62,9 @@ int main()
 
 
     int * temp2= new int[3];
-    temp[0]=5;
-    temp[1]=4;
-    temp[2]=5;
+    temp2[0]=5;
+    temp2[1]=4;
+    temp2[2]=5;
 
     film1->setNewTableau(temp2,3);
 
@@ -87,7 +87,10 @@ int main()
     film2->print(cout);
     film2->affichageChapitres();
 
-    Film* film3(film2);
+    Film* film3=*film2;
+    //Film* film3=film2;
+    //Film* film3(film2);
+    //Film* film3=Film(film2);
 
 
     cout<<endl<<endl<<endl<<"affichage 4: film 2 et film 3 "<<endl<<endl;
@@ -117,3 +120,5 @@ int main()
 
 
 }
+
+

@@ -5,6 +5,7 @@ using namespace std;
 
     // Constructeur de Film
     Film::Film(string nomOb,string nomF,int du):Video(nomOb,nomF,du){
+        cout<<"joder"<<endl;
         tailleTableau = 0;
     }
 
@@ -13,6 +14,8 @@ using namespace std;
         setDuree(from.getDuree());
         setNomObjet(from.getNomObjet());
         setNomFichier(from.getNomFichier());
+
+        cout<<"joder   "<<from.getNomFichier()<<endl;
 
         if(from.getTableau())
             tableauDurees=new int(*from.tableauDurees);
