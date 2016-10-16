@@ -9,17 +9,23 @@
 #
 # Nom du programme
 #
-PROG = multimedia
+CLIENT=client
+PROG=multimedia
+CLISERV=cliserv
 
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = Multimedia.cpp main.cpp Film.cpp
+PROG_SOURCES = Multimedia.cpp main.cpp Film.cpp GestionControl.cpp cppsocket.cpp tcpserver.cpp
+CLIENT_SOURCES=client.cpp cppsocket.cpp
+CLISERV_SOURCES=Multimedia.cpp main.cpp Film.cpp GestionControl.cpp client.cpp  tcpserver.cpp cppsocket.cpp Makefile
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)
 #
-OBJETS = ${SOURCES:%.cpp=%.o}
+
+CLIENT_OBJETS=${CLIENT_SOURCES:%.cpp=%.o}
+PROG_OBJETS=${PROG_SOURCES:%.cpp=%.o}
 
 #
 # Compilateur C++
@@ -43,7 +49,7 @@ LDFLAGS =
 # Librairies a utiliser
 # Example: LDLIBS = -L/usr/local/qt/lib -lqt
 #
-LDLIBS = 
+LDLIBS = -lpthread
 
 
 ##########################################
@@ -51,20 +57,25 @@ LDLIBS =
 # Regles de construction/destruction des .o et de l'executable
 # depend-${PROG} sera un fichier contenant les dependances
 #
- 
-all: ${PROG}
+all: ${CLIENT} ${PROG}
 
-run: ${PROG}
+run-${PROG}: ${PROG}
 	./${PROG}
 
-${PROG}: depend-${PROG} ${OBJETS}
-	${CXX} -o $@ ${LDFLAGS} ${OBJETS} ${LDLIBS}
+run-${CLIENT}: ${CLIENT}
+	./${CLIENT}
+
+${CLIENT}: depend-${CLIENT} ${CLIENT_OBJETS}
+	${CXX} -o $@ ${CXXFLAGS} ${LDFLAGS} ${CLIENT_OBJETS} ${LDLIBS}
+
+${PROG}: depend-${PROG} ${PROG_OBJETS}
+	${CXX} -o $@ ${CXXFLAGS} ${LDFLAGS} ${PROG_OBJETS} ${LDLIBS}
 
 clean:
-	-@$(RM) *.o depend-${PROG} core 1>/dev/null 2>&1
+	-@$(RM) *.o depend-${CLIENT} depend-${PROG} core 1>/dev/null 2>&1
 
 clean-all: clean
-	-@$(RM) ${PROG} 1>/dev/null 2>&1
+	-@$(RM) -${CLIENT} -${PROG} 1>/dev/null 2>&1
   
 tar:
 	tar cvf ${PROG}.tar.gz ${SOURCES}
@@ -73,8 +84,10 @@ tar:
 # l'option -MM de g++ (attention tous les compilateurs n'ont pas cette option)
 #
 depend-${PROG}:
-	${CXX} $(CXXFLAGS) -MM ${SOURCES} > depend-${PROG}
+	${CXX} ${CXXFLAGS} -MM ${PROG_SOURCES} > depend-${PROG}
 
+depend-${CLIENT}:
+	${CXX} ${CXXFLAGS} -MM ${CLIENT_SOURCES} > depend-${CLIENT}
 
 ###########################################
 #
@@ -98,3 +111,4 @@ depend-${PROG}:
 # Inclusion du fichier des dependances
 #
 -include depend-${PROG}
+-include depend-${CLIENT}

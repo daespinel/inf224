@@ -40,7 +40,17 @@ public:
     virtual void print(ostream & s);
 
     // Declaration methode de jouer l'objet
-    virtual void jouer()=0;
+    virtual void jouer(){}
+
+    virtual void write(ostream & file){
+        file<<nomObjet<<'\n'<<nomFichier<<'\n';
+    }
+
+    virtual void read(ifstream &file){
+        cerr<<"entering at multimedia level"<<endl;
+        getline(file,nomObjet);
+        getline(file,nomFichier);
+    }
 
 };
 

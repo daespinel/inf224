@@ -1,3 +1,8 @@
 Multimedia.o: Multimedia.cpp Multimedia.h
-main.o: main.cpp Video.h Multimedia.h Photo.h Film.h
+main.o: main.cpp Video.h Multimedia.h Photo.h Film.h Groupe.h \
+ GestionControl.h tcpserver.h cppsocket.h
 Film.o: Film.cpp Film.h Video.h Multimedia.h
+GestionControl.o: GestionControl.cpp GestionControl.h Multimedia.h \
+ Groupe.h Video.h Photo.h Film.h tcpserver.h cppsocket.h
+cppsocket.o: cppsocket.cpp cppsocket.h
+tcpserver.o: tcpserver.cpp tcpserver.h cppsocket.h

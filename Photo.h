@@ -2,6 +2,9 @@
 #define PHOTO_H
 
 #include "Multimedia.h"
+#include<iostream>
+#include<fstream>
+
 
 class Photo:public Multimedia{
 
@@ -41,7 +44,7 @@ public:
     // Methode d'affichage des donnees
     void print(ostream & s) override{
         s <<"Nom objet: "<<getNomObjet() << ' '<< ",Nom Fichier: "<<getNomFichier()<<" "
-         <<",Latitude: "<<getLatitude()<<" "<<",Longitude: "<<getLongitude() <<endl;
+         <<",Latitude: "<<getLatitude()<<" "<<",Longitude: "<<getLongitude();
     }
 
     //dans mon ordi j'utilise display, cepedant dans l'ecole c'est imagej
@@ -53,7 +56,27 @@ public:
     }
 
     // Destructeur
-    //~Photo();
+    virtual ~Photo(){//cout<<"elimination du Photo "<<getNomObjet()<<endl;
+    }
+
+
+    virtual void write(ostream & file) override {
+        Multimedia::write(file);
+        file<<latitude<<'\n'<<longitude<<'\n';
+    }
+
+    virtual void read(ifstream &file) override {
+        Multimedia::read(file);
+        string latitudeTemp;
+        getline(file,latitudeTemp);
+        latitude=stoi(latitudeTemp);
+        cerr<<"aqui esta la latitud"<<endl;
+
+        string longitudeTemp;
+        getline(file,longitudeTemp);
+        longitude=stoi(longitudeTemp);
+
+    }
 
 
 };

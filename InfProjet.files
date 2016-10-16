@@ -6,3 +6,11 @@ Photo.h
 Film.h
 Groupe.h
 Film.cpp
+GestionControl.h
+GestionControl.cpp
+client.cpp
+cppsocket.cpp
+cppsocket.h
+server.cpp
+tcpserver.cpp
+tcpserver.h

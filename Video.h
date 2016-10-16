@@ -2,6 +2,8 @@
 #define VIDEO_H
 
 #include "Multimedia.h"
+#include<iostream>
+#include<fstream>
 
 class Video:public Multimedia{
 
@@ -28,7 +30,7 @@ public:
     // Methode d'affichage des donnees
     void print(ostream & s) override{
         s <<"Nom video: "<<getNomObjet() << ' '<< ",Nom Fichier: "<<getNomFichier()<<" "
-         <<",Duree: "<<getDuree() <<endl;
+         <<",Duree: "<<getDuree();
     }
 
     // Methode pour regarder la video
@@ -37,7 +39,21 @@ public:
         system(paramVideo.c_str());
     }
 
-    //~Video();
+    virtual ~Video(){//cout<<"elimination de Video "<<getNomObjet()<<endl;
+                    }
+
+    virtual void write(ostream & file) override{
+        Multimedia::write(file);
+        file<<duree<<'\n';
+    }
+
+    virtual void read(ifstream &file) override{
+        Multimedia::read(file);
+        string dureeTemp;
+        getline(file,dureeTemp);
+        duree=stoi(dureeTemp);
+
+    }
 
 };
 
